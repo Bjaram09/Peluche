@@ -1,0 +1,45 @@
+/* Transiciones suaves para interactividad */
+.option-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.option-card:hover {
+  transform: translateY(-2px);
+}
+.option-card:active {
+  transform: translateY(0);
+}
+
+/* Animación del círculo de respiración guiada */
+.breathing-circle {
+  transition:
+    transform 4s ease-in-out,
+    background-color 4s ease-in-out,
+    box-shadow 4s ease-in-out;
+}
+.breathing-inhale {
+  transform: scale(1.4);
+  box-shadow: 0 0 35px rgba(206, 212, 218, 0.8);
+}
+.breathing-hold {
+  transform: scale(1.4);
+  box-shadow: 0 0 45px rgba(173, 181, 189, 0.9);
+}
+.breathing-exhale {
+  transform: scale(1);
+  box-shadow: 0 0 15px rgba(222, 226, 230, 0.4);
+}
+
+/* Barra de desplazamiento suave */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f3f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6c757d;
+}

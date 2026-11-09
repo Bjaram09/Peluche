@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cuestionario de Autorregulación Emocional</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Hojas de estilo personalizadas -->
+    <link rel="stylesheet" href="./styles.css" />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Configuración de Tailwind CSS v3 con la paleta personalizada -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              jasmine: {
+                50: "#fef8e7",
+                100: "#fcf1cf",
+                200: "#fae39e",
+                300: "#f7d56e",
+                400: "#f5c73d",
+                500: "#f2b90d",
+                600: "#c2940a",
+                700: "#916f08",
+                800: "#614a05",
+                900: "#302503",
+                950: "#221a02",
+              },
+              "pumpkin-spice": {
+                50: "#fff1e5",
+                100: "#ffe2cc",
+                200: "#ffc599",
+                300: "#ffa866",
+                400: "#ff8b33",
+                500: "#ff6e00",
+                600: "#cc5800",
+                700: "#994200",
+                800: "#662c00",
+                900: "#331600",
+                950: "#240f00",
+              },
+              "powder-blue": {
+                50: "#ebf2f9",
+                100: "#d7e5f4",
+                200: "#b0cbe8",
+                300: "#88b1dd",
+                400: "#6197d1",
+                500: "#397dc6",
+                600: "#2e649e",
+                700: "#224b77",
+                800: "#17324f",
+                900: "#0b1928",
+                950: "#08121c",
+              },
+              wisteria: {
+                50: "#f1edf7",
+                100: "#e2dbf0",
+                200: "#c6b7e1",
+                300: "#a993d2",
+                400: "#8c6fc3",
+                500: "#704bb4",
+                600: "#593c90",
+                700: "#432d6c",
+                800: "#2d1e48",
+                900: "#160f24",
+                950: "#100b19",
+              },
+              "bubblegum-pink": {
+                50: "#fce8ed",
+                100: "#fad1db",
+                200: "#f4a4b7",
+                300: "#ef7692",
+                400: "#ea486e",
+                500: "#e41b4a",
+                600: "#b7153b",
+                700: "#89102c",
+                800: "#5b0b1e",
+                900: "#2e050f",
+                950: "#20040a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-powder-blue-50 text-powder-blue-900 font-sans min-h-screen flex flex-col justify-between selection:bg-wisteria-200 selection:text-wisteria-900"
+  >
+    <!-- ENCABEZADO -->
+    <header
+      class="w-full bg-white/90 backdrop-blur-md border-b border-powder-blue-200 sticky top-0 z-30 shadow-sm"
+    >
+      <div
+        class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between"
+      >
+        <div class="flex items-center space-x-3">
+          <div
+            class="w-10 h-10 rounded-2xl bg-wisteria-600 text-white flex items-center justify-center shadow-md shadow-wisteria-500/20"
+          >
+            <i class="fa-solid fa-wind text-lg"></i>
+          </div>
+          <div>
+            <h1
+              class="text-lg font-bold tracking-tight text-wisteria-950 leading-none"
+            >
+              Mi Estado de Hoy
+            </h1>
+            <p class="text-xs text-powder-blue-700 mt-0.5">
+              Espacio de Autorregulación Emocional
+            </p>
+          </div>
+        </div>
+
+        <!-- Indicador visual superior -->
+        <div
+          class="hidden sm:flex items-center gap-2 text-xs font-semibold text-wisteria-700 bg-wisteria-50 px-3.5 py-1.5 rounded-full border border-wisteria-200"
+        >
+          <i class="fa-regular fa-face-smile text-wisteria-500"></i>
+          <span>Pausa & Escucha interna</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main
+      class="max-w-3xl w-full mx-auto px-4 py-6 sm:py-10 flex-grow flex flex-col justify-center"
+    >
+      <!-- TARJETA DEL CUESTIONARIO -->
+      <div
+        id="quiz-card"
+        class="bg-white rounded-3xl border border-powder-blue-200 shadow-xl shadow-powder-blue-900/5 p-6 sm:p-10 transition-all duration-300 relative overflow-hidden"
+      >
+        <!-- BARRA DE PROGRESO -->
+        <div class="mb-8">
+          <div class="flex justify-between items-end mb-2.5">
+            <span
+              id="progress-text"
+              class="text-xs font-semibold uppercase tracking-wider text-powder-blue-700"
+            >
+              Pregunta
+              <span
+                id="current-question-num"
+                class="text-wisteria-900 font-bold"
+                >1</span
+              >
+              de <span id="total-questions-num">11</span>
+            </span>
+            <span
+              id="progress-percent"
+              class="text-xs font-bold text-wisteria-700 bg-wisteria-50 px-3 py-1 rounded-full border border-wisteria-200"
+            >
+              0%
+            </span>
+          </div>
+          <div
+            class="w-full bg-powder-blue-100 h-2.5 rounded-full overflow-hidden p-0.5 border border-powder-blue-200"
+          >
+            <div
+              id="progress-bar"
+              class="bg-wisteria-500 h-full rounded-full transition-all duration-300 ease-out"
+              style="width: 0%"
+            ></div>
+          </div>
+        </div>
+
+        <!-- ÁREA DE PREGUNTA -->
+        <div class="min-h-[110px] flex flex-col justify-center mb-8">
+          <span
+            id="question-category"
+            class="inline-block text-xs font-bold text-wisteria-600 uppercase tracking-widest mb-2"
+          >
+            Categoría
+          </span>
+          <h2
+            id="question-text"
+            class="text-xl sm:text-2xl font-bold text-powder-blue-950 leading-snug"
+          >
+            Cargando pregunta...
+          </h2>
+        </div>
+
+        <!-- OPCIONES DE RESPUESTA (Sí, Tal vez, No) -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8"
+          id="options-container"
+        >
+          <!-- Opción SÍ -->
+          <button
+            data-value="Sí"
+            class="option-card group relative p-4 rounded-2xl border-2 border-bubblegum-pink-200 bg-bubblegum-pink-50/50 hover:bg-bubblegum-pink-100/70 text-left flex sm:flex-col justify-between sm:justify-center items-center gap-3 transition focus:outline-none focus:ring-2 focus:ring-bubblegum-pink-400"
+          >
+            <div
+              class="w-11 h-11 rounded-xl bg-bubblegum-pink-100 text-bubblegum-pink-600 group-hover:bg-bubblegum-pink-500 group-hover:text-white flex items-center justify-center transition shadow-sm"
+            >
+              <i class="fa-solid fa-check text-lg"></i>
+            </div>
+            <span class="font-bold text-base text-bubblegum-pink-900">Sí</span>
+            <div
+              class="selected-icon hidden sm:absolute top-3 right-3 text-bubblegum-pink-600"
+            >
+              <i class="fa-solid fa-circle-check text-lg"></i>
+            </div>
+          </button>
+
+          <!-- Opción TAL VEZ -->
+          <button
+            data-value="Tal vez"
+            class="option-card group relative p-4 rounded-2xl border-2 border-jasmine-200 bg-jasmine-50/60 hover:bg-jasmine-100/70 text-left flex sm:flex-col justify-between sm:justify-center items-center gap-3 transition focus:outline-none focus:ring-2 focus:ring-jasmine-400"
+          >
+            <div
+              class="w-11 h-11 rounded-xl bg-jasmine-100 text-jasmine-700 group-hover:bg-jasmine-500 group-hover:text-white flex items-center justify-center transition shadow-sm"
+            >
+              <i class="fa-solid fa-cloud text-lg"></i>
+            </div>
+            <span class="font-bold text-base text-jasmine-900">Tal vez</span>
+            <div
+              class="selected-icon hidden sm:absolute top-3 right-3 text-jasmine-600"
+            >
+              <i class="fa-solid fa-circle-check text-lg"></i>
+            </div>
+          </button>
+
+          <!-- Opción NO -->
+          <button
+            data-value="No"
+            class="option-card group relative p-4 rounded-2xl border-2 border-powder-blue-200 bg-powder-blue-50/60 hover:bg-powder-blue-100/70 text-left flex sm:flex-col justify-between sm:justify-center items-center gap-3 transition focus:outline-none focus:ring-2 focus:ring-powder-blue-400"
+          >
+            <div
+              class="w-11 h-11 rounded-xl bg-powder-blue-100 text-powder-blue-600 group-hover:bg-powder-blue-500 group-hover:text-white flex items-center justify-center transition shadow-sm"
+            >
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </div>
+            <span class="font-bold text-base text-powder-blue-900">No</span>
+            <div
+              class="selected-icon hidden sm:absolute top-3 right-3 text-powder-blue-600"
+            >
+              <i class="fa-solid fa-circle-check text-lg"></i>
+            </div>
+          </button>
+        </div>
+
+        <!-- NAVEGACIÓN -->
+        <div
+          class="flex items-center justify-between pt-5 border-t border-powder-blue-100"
+        >
+          <button
+            id="btn-prev"
+            class="px-4 py-2.5 rounded-xl border border-powder-blue-200 text-powder-blue-800 bg-white hover:bg-powder-blue-100 font-medium text-sm transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+            <span>Anterior</span>
+          </button>
+
+          <span class="text-xs text-powder-blue-600 hidden sm:inline-block"
+            >Selecciona una respuesta para continuar</span
+          >
+
+          <button
+            id="btn-next"
+            class="px-5 py-2.5 rounded-xl bg-wisteria-600 hover:bg-wisteria-700 text-white font-semibold text-sm transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 shadow-md shadow-wisteria-600/20"
+          >
+            <span id="next-btn-text">Siguiente</span>
+            <i id="next-btn-icon" class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- TARJETA DE RESULTADOS (OCULTA INICIALMENTE) -->
+      <div
+        id="results-card"
+        class="hidden bg-white rounded-3xl border border-powder-blue-200 shadow-xl shadow-powder-blue-900/5 p-6 sm:p-10 transition-all duration-300"
+      >
+        <!-- ENCABEZADO DE RESULTADO -->
+        <div class="text-center mb-8">
+          <div
+            id="status-icon-container"
+            class="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-wisteria-600 text-white mb-4 shadow-lg shadow-wisteria-500/30"
+          >
+            <i id="status-icon" class="fa-solid fa-heart text-2xl"></i>
+          </div>
+          <span
+            id="status-badge"
+            class="block w-max mx-auto text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-wisteria-50 text-wisteria-700 border border-wisteria-200 mb-2"
+          >
+            Diagnóstico Emocional
+          </span>
+          <h2
+            id="status-title"
+            class="text-2xl sm:text-3xl font-extrabold text-powder-blue-950"
+          >
+            Evaluando respuesta...
+          </h2>
+        </div>
+
+        <!-- RECOMENDACIÓN PRINCIPAL DESTACADA -->
+        <div
+          id="recommendation-card"
+          class="p-6 rounded-2xl bg-powder-blue-50 border-2 border-powder-blue-200 mb-8 flex flex-col sm:flex-row items-center sm:items-start gap-4"
+        >
+          <div
+            id="rec-icon-box"
+            class="w-12 h-12 rounded-2xl bg-wisteria-600 text-white flex items-center justify-center shrink-0 shadow-md"
+          >
+            <i id="rec-icon" class="fa-solid fa-user-nurse text-xl"></i>
+          </div>
+          <div class="text-center sm:text-left">
+            <h3
+              id="rec-subtitle"
+              class="text-xs font-bold uppercase tracking-wider text-powder-blue-700 mb-1"
+            >
+              Recomendación para tu día
+            </h3>
+            <p
+              id="rec-text"
+              class="text-base font-semibold text-powder-blue-950 leading-relaxed"
+            >
+              Cargando recomendación...
+            </p>
+          </div>
+        </div>
+
+        <!-- CONTEO Y DESGLOSE DE RESPUESTAS -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+          <div
+            class="p-4 rounded-2xl border border-bubblegum-pink-200 bg-bubblegum-pink-50/50 text-center"
+          >
+            <span
+              class="block text-xs font-bold text-bubblegum-pink-700 uppercase tracking-wider mb-1"
+              >Sí (Carga)</span
+            >
+            <span
+              id="stat-yes-count"
+              class="text-2xl sm:text-3xl font-extrabold text-bubblegum-pink-900"
+              >0</span
+            >
+            <span
+              id="stat-yes-percent"
+              class="block text-xs font-medium text-bubblegum-pink-600 mt-1"
+              >0%</span
+            >
+          </div>
+
+          <div
+            class="p-4 rounded-2xl border border-jasmine-200 bg-jasmine-50/50 text-center"
+          >
+            <span
+              class="block text-xs font-bold text-jasmine-800 uppercase tracking-wider mb-1"
+              >Tal vez</span
+            >
+            <span
+              id="stat-maybe-count"
+              class="text-2xl sm:text-3xl font-extrabold text-jasmine-900"
+              >0</span
+            >
+            <span
+              id="stat-maybe-percent"
+              class="block text-xs font-medium text-jasmine-700 mt-1"
+              >0%</span
+            >
+          </div>
+
+          <div
+            class="p-4 rounded-2xl border border-powder-blue-200 bg-powder-blue-50/60 text-center"
+          >
+            <span
+              class="block text-xs font-bold text-powder-blue-700 uppercase tracking-wider mb-1"
+              >No (Calma)</span
+            >
+            <span
+              id="stat-no-count"
+              class="text-2xl sm:text-3xl font-extrabold text-powder-blue-900"
+              >0</span
+            >
+            <span
+              id="stat-no-percent"
+              class="block text-xs font-medium text-powder-blue-600 mt-1"
+              >0%</span
+            >
+          </div>
+        </div>
+
+        <!-- BARRA PROPORCIONAL VISUAL -->
+        <div class="mb-8">
+          <div
+            class="w-full bg-powder-blue-100 h-3.5 rounded-full overflow-hidden flex p-0.5 border border-powder-blue-200 mb-2"
+          >
+            <div
+              id="bar-yes"
+              class="bg-bubblegum-pink-500 h-full transition-all duration-500 rounded-l-full"
+              style="width: 0%"
+              title="Sí"
+            ></div>
+            <div
+              id="bar-maybe"
+              class="bg-jasmine-400 h-full transition-all duration-500"
+              style="width: 0%"
+              title="Tal vez"
+            ></div>
+            <div
+              id="bar-no"
+              class="bg-powder-blue-400 h-full transition-all duration-500 rounded-r-full"
+              style="width: 0%"
+              title="No"
+            ></div>
+          </div>
+          <div
+            class="flex justify-between items-center text-xs text-powder-blue-700 px-1 font-medium"
+          >
+            <span class="flex items-center gap-1.5"
+              ><span
+                class="w-2.5 h-2.5 rounded-full bg-bubblegum-pink-500 inline-block"
+              ></span>
+              Sí</span
+            >
+            <span class="flex items-center gap-1.5"
+              ><span
+                class="w-2.5 h-2.5 rounded-full bg-jasmine-400 inline-block"
+              ></span>
+              Tal vez</span
+            >
+            <span class="flex items-center gap-1.5"
+              ><span
+                class="w-2.5 h-2.5 rounded-full bg-powder-blue-400 inline-block"
+              ></span>
+              No</span
+            >
+          </div>
+        </div>
+
+        <!-- MÓDULO INTERACTIVO DE RESPIRACIÓN GUIADA -->
+        <div
+          class="mb-8 p-6 bg-wisteria-50/50 border border-wisteria-200 rounded-3xl text-center relative overflow-hidden"
+        >
+          <div class="mb-4">
+            <span
+              class="text-xs font-bold uppercase tracking-widest text-wisteria-600 block mb-1"
+            >
+              <i class="fa-solid fa-cloud-sun mr-1"></i> Ejercicio del Peluche
+              Sensorial
+            </span>
+            <h4 class="text-lg font-bold text-wisteria-950">
+              Respiración Guiada de Calma
+            </h4>
+            <p class="text-xs text-powder-blue-700 mt-1">
+              Sigue el ritmo del círculo para inhalar, sostener y exhalar
+              suavemente.
+            </p>
+          </div>
+
+          <!-- Círculo animado de respiración -->
+          <div
+            class="py-8 flex flex-col items-center justify-center min-h-[220px]"
+          >
+            <div
+              id="breathing-node"
+              class="breathing-circle w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white border-4 border-wisteria-500 flex items-center justify-center shadow-md mb-4 relative"
+            >
+              <i class="fa-solid fa-spa text-2xl text-wisteria-600"></i>
+            </div>
+            <span
+              id="breathing-phase"
+              class="text-base font-bold text-wisteria-900 tracking-wide uppercase"
+            >
+              Presiona iniciar
+            </span>
+            <span
+              id="breathing-timer"
+              class="text-xs font-semibold text-powder-blue-700 mt-1"
+            >
+              Ritmo 4s - 4s - 4s
+            </span>
+          </div>
+
+          <!-- Botón de control de respiración -->
+          <button
+            id="btn-toggle-breathing"
+            class="px-6 py-2.5 rounded-xl bg-wisteria-600 hover:bg-wisteria-700 text-white font-semibold text-xs transition flex items-center gap-2 mx-auto shadow-md shadow-wisteria-600/20"
+          >
+            <i id="breathing-btn-icon" class="fa-solid fa-play"></i>
+            <span id="breathing-btn-text">Iniciar Respiración</span>
+          </button>
+        </div>
+
+        <!-- LISTA DETALLADA DE RESPUESTAS -->
+        <div class="mb-8">
+          <button
+            id="btn-toggle-details"
+            class="w-full py-2.5 px-4 bg-powder-blue-100 hover:bg-powder-blue-200 text-powder-blue-800 font-semibold text-xs rounded-xl transition flex items-center justify-between mb-3"
+          >
+            <span>Ver Detalle de tus 11 Respuestas</span>
+            <i id="details-arrow" class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div
+            id="detailed-results"
+            class="hidden space-y-2 max-h-72 overflow-y-auto pr-1 transition-all"
+          >
+            <!-- Se puebla por JavaScript -->
+          </div>
+        </div>
+
+        <!-- BOTÓN DE REINICIAR -->
+        <div class="pt-4 border-t border-powder-blue-200">
+          <button
+            id="btn-restart"
+            class="w-full py-3.5 px-4 rounded-xl bg-wisteria-600 hover:bg-wisteria-700 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-md shadow-wisteria-600/20"
+          >
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Realizar Cuestionario Nuevamente</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- NOTIFICACIÓN TOAST -->
+    <div
+      id="toast"
+      class="fixed bottom-5 right-5 bg-wisteria-900 text-white px-4 py-3 rounded-xl shadow-lg border border-wisteria-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 z-50"
+    >
+      <i id="toast-icon" class="fa-solid fa-circle-check text-wisteria-300"></i>
+      <span id="toast-message" class="text-xs font-medium">Notificación</span>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer
+      class="w-full border-t border-powder-blue-200 py-4 bg-white/70 text-center text-xs text-powder-blue-700"
+    >
+      <div class="max-w-4xl mx-auto px-4">
+        <p>
+          Cuestionario de Autorregulación Emocional &copy; 2026 — Espacio de
+          Apoyo e Higiene Mental
+        </p>
+      </div>
+    </footer>
+
+    <!-- LÓGICA EN JAVASCRIPT -->
+    <script src="./index.js"></script>
+  </body>
+</html>
