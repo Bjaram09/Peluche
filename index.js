@@ -239,8 +239,15 @@ function renderResults() {
 
   const q11Answer = answers[11]; // Pregunta sobre peluche vs adulto
 
+  // Variable para almacenar la orden al ESP32
+  let bleCommand = "G";
+
   if (yesCount >= maybeCount && yesCount >= noCount) {
-    // Estado: Abrumado / Carga emocional alta -> Apoyo de Adulto
+    // ----------------------------------------------------
+    // ROJO: Persona de Apoyo (Comando 'R')
+    // ----------------------------------------------------
+    bleCommand = "R";
+
     statusTitle.textContent = "Te sientes algo abrumado/a hoy";
     statusBadge.textContent = "Estado: Necesitas un descanso o apoyo";
     statusIcon.className = "fa-solid fa-hand-holding-heart text-2xl";
@@ -255,7 +262,11 @@ function renderResults() {
       recIcon.className = "fa-solid fa-people-hold text-xl";
     }
   } else if (maybeCount >= yesCount && maybeCount >= noCount) {
-    // Estado: Más o menos / Inquieto -> Peluche Sensorial de Respiración
+    // ----------------------------------------------------
+    // AMARILLO: Peluche Sensorial (Comando 'Y')
+    // ----------------------------------------------------
+    bleCommand = "Y";
+
     statusTitle.textContent = "Te sientes algo inquieto/a o dudoso/a";
     statusBadge.textContent = "Estado: Intermedio / En pausa";
     statusIcon.className = "fa-solid fa-cloud-sun text-2xl";
@@ -269,7 +280,11 @@ function renderResults() {
       if (!isBreathingActive) startBreathingCycle();
     }, 800);
   } else {
-    // Estado: Tranquilo / Bien -> Refuerzo positivo
+    // ----------------------------------------------------
+    // VERDE: Estado en Calma (Comando 'G')
+    // ----------------------------------------------------
+    bleCommand = "G";
+
     statusTitle.textContent = "¡Te sientes tranquilo/a y bien!";
     statusBadge.textContent = "Estado: Bienestar y Armonía";
     statusIcon.className = "fa-solid fa-face-smile text-2xl";
@@ -278,6 +293,11 @@ function renderResults() {
       "¡Te sientes muy bien hoy! Continúa disfrutando tu día y manteniendo tu bienestar. Si en algún momento necesitas una pausa, el peluche o un adulto siempre estarán disponibles.";
     recIcon.className = "fa-solid fa-sparkles text-xl";
   }
+
+  // ----------------------------------------------------
+  // ENVIAR SEÑAL BLE AL ESP32
+  // ----------------------------------------------------
+  sendResultToESP32(bleCommand);
 
   // Detalle de las 11 preguntas
   renderDetailedList();
