@@ -488,3 +488,11 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
+const resetBtn = document.getElementById("btn-restart");
+
+resetBtn.addEventListener("click", function () {
+  let bleCommand = "O";
+  sendResultToESP32(bleCommand);
+  console.log("Apagando Semaforo");
+});
